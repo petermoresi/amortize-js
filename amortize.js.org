@@ -175,4 +175,118 @@
 
   Download the complete source code:  [[file:amortize.js]]
    
-   
+** Test Page							   :noexport:
+
+#+NAME: test-page-js
+#+BEGIN_SRC js :noweb yes
+  <<pmt-function>>
+
+  <<compute-schedule-function>>
+
+  function getDataSet() { 
+      var loan_amount = parseFloat( $('#loan_amount').val() );
+      var interest_rate = parseFloat( $('#interest_rate').val() );
+      var payments_per_year = parseInt( $('#payments_per_year').val() );
+      var years = parseInt( $('#years').val() );
+                                     
+      var payment = pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount);
+      
+      return compute_schedule(loan_amount,
+                              interest_rate,
+                              payments_per_year,
+                              years,
+                              payment);
+  }
+
+  function reloadTable() {
+      $('#demo').empty();
+      $('#demo').html( '<table cellpadding="0" cellspacing="0" border="0" class="display table" id="example"></table>' );
+      $('#example').dataTable( {
+          "data": getDataSet(),
+          "columns": [
+              { "title": "Period" },
+              { "title": "Payment" },
+              { "title": "Principle" },
+              { "title": "Interest" },
+              { "title": "Remaining" }
+          ],
+          "search": false,
+          "paging":   false,
+          "ordering": false,
+          "info":     false
+      } );   
+  }
+
+  $(document).ready(function() {
+      reloadTable();
+
+      $(document).on('keyup', '.user-input', function(e) {
+          reloadTable();
+      });
+  });
+#+END_SRC
+
+#+BEGIN_SRC html :tangle test-page.html :noweb yes
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Amortization Schedule Test Page</title>
+
+    <!-- Bootstrap -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.t.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+  </head>
+  <body>
+    <h1>Amortization Schedule</h1>
+
+    <div id="user-input" class="row">
+      <div class="col-sm-6 ">
+        Loan Amount
+      </div>
+      <div class="col-sm-6">
+        <input type="text" id="loan_amount" class="user-input" value="50000" />
+      </div>
+     <div class="col-sm-6">
+        Interest Rate
+      </div>
+      <div class="col-sm-6">
+        <input type="text" id="interest_rate" class="user-input" value="4.5">
+      </div>
+     <div class="col-sm-6">
+        Years
+      </div>
+      <div class="col-sm-6">
+        <input type="text" id="years" class="user-input" value="3" />
+      </div> 
+     <div class="col-sm-6">
+        Payments per year
+      </div>
+      <div class="col-sm-6">
+        <input type="text" id="payments_per_year" class="user-input" value="12" />
+      </div>
+   </div>
+
+    <div id="demo">
+    </div>
+ 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script>
+    <<test-page-js>>
+    </script>
+
+  </body>
+</html>
+#+END_SRC
