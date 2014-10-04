@@ -2,4 +2,4 @@ A literate program to calculate an amortization schedule in [org-mode](http://or
 
 Online demo at [petermoresi.github.io/loan-calculator-js/](http://petermoresi.github.io/loan-calculator-js/#outline-container-sec-5). Documentation at [http://petermoresi.github.io/loan-calculator-js/](http://petermoresi.github.io/loan-calculator-js/#outline-container-sec-1)
 
-For literate programming with org-mode please see [amortize.js.org](./amortized.js.org). 
+For literate programming with org-mode please see [amortize.js.org](./amortize.js.org). 
