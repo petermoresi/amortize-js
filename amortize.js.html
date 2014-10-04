@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>amortize.js</title>
-<!-- 2014-09-26 Fri 10:36 -->
+<!-- 2014-10-03 Fri 21:13 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Peter Moresi" />
@@ -88,6 +88,16 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -146,17 +156,28 @@ for the JavaScript code in this tag.
 <li><a href="#sec-2">2. Compute Payment</a>
 <ul>
 <li><a href="#sec-2-1">2.1. Overview</a></li>
+<li><a href="#sec-2-2">2.2. Source Code</a></li>
+<li><a href="#sec-2-3">2.3. Tests</a>
+<ul>
+<li><a href="#sec-2-3-1">2.3.1. Should be 297.47</a></li>
+<li><a href="#sec-2-3-2">2.3.2. Should be 2245.22</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#sec-3">3. Compute Schedule</a>
 <ul>
 <li><a href="#sec-3-1">3.1. Overview</a></li>
+<li><a href="#sec-3-2">3.2. JavaScript</a></li>
+<li><a href="#sec-3-3">3.3. Test</a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4. Amortize.js</a></li>
+<li><a href="#sec-5">5. Product</a></li>
 </ul>
 </div>
 </div>
+
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Overview</h2>
@@ -241,6 +262,94 @@ The function accepts arguments:
 </table>
 </div>
 </div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Source Code</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+The function signature in JavaScript.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="define-pmt">pmt(rate,nper,pv)
+</pre>
+</div>
+
+<p>
+In order to calculate the payment we need to first calculate the Present Value Interest Factor (PVIF).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="calculate-pvif">pvif = Math.pow( 1 + rate, nper);
+</pre>
+</div>
+
+<p>
+Using the PVIF we can calculate the payment.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="calculate-pmt">pmt = rate / (pvif - 1) * -(pv * pvif);
+</pre>
+</div>
+
+<p>
+Finally, the sections are combined into a JavaScript function definition.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="pmt-function"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">pvif</span>, <span style="color: #BA36A5;">pmt</span>;
+
+    pvif = Math.pow( 1 + rate, nper);
+    pmt = rate / (pvif - 1) * -(pv * pvif);   
+
+    <span style="color: #0000FF;">return</span> pmt;
+};
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Tests</h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Should be 297.47</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="org-src-container">
+
+<pre class="src src-js" id="run-pmt"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">pvif</span>, <span style="color: #BA36A5;">pmt</span>;
+
+    pvif = Math.pow( 1 + rate, nper);
+    pmt = rate / (pvif - 1) * -(pv * pvif);   
+
+    <span style="color: #0000FF;">return</span> pmt;
+};
+<span style="color: #0000FF;">return</span> pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount).toFixed(2);
+</pre>
+</div>
+
+<pre class="example">
+297.47
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> Should be 2245.22</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<pre class="example">
+2245.22
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-sec-3" class="outline-2">
@@ -300,6 +409,119 @@ The function accepts arguments:
 </table>
 </div>
 </div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> JavaScript</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+The function signature is:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="define-compute-schedule">compute_schedule(loan_amount, interest_rate, payments_per_year, years, payment)
+</pre>
+</div>
+
+<p>
+Define an array to capture the schedule.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="define-schedule-array"><span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
+</pre>
+</div>
+
+<p>
+Define a variable to track the remaining balance.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="define-remaining-balance"><span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
+</pre>
+</div>
+
+<p>
+Compute the total number of payments.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="compute-number-of-payments"><span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
+</pre>
+</div>
+
+
+<p>
+Loop through all of the periods and capture the entries in the schedule.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="loop-schedule"><span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, payment.toFixed(2), principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+    schedule.push(row);
+    remaining -= principle
+}
+</pre>
+</div>
+
+<p>
+Finally, define the compute-schedule function.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js" id="compute-schedule-function"><span style="color: #0000FF;">function</span> <span style="color: #006699;">compute_schedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
+
+    <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, payment.toFixed(2), principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+        schedule.push(row);
+        remaining -= principle
+    }
+
+    <span style="color: #0000FF;">return</span> schedule;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Test</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+
+<pre class="src src-js" id="run-compute-schedule"><span style="color: #0000FF;">function</span> <span style="color: #006699;">compute_schedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
+
+    <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, payment.toFixed(2), principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+        schedule.push(row);
+        remaining -= principle
+    }
+
+    <span style="color: #0000FF;">return</span> schedule;
+}
+
+<span style="color: #0000FF;">return</span> compute_schedule(loan_amount, interest_rate, payments_per_year, years, payment)
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-sec-4" class="outline-2">
@@ -310,12 +532,19 @@ Download the complete source code:  <a href="amortize.js">amortize.js</a>
 </p>
 </div>
 </div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Product</h2>
+<div class="outline-text-2" id="text-5">
+<iframe src="test-page.html" />
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2014-09-26 Fri&gt;</span></span></p>
 <p class="author">Author: Peter Moresi</p>
-<p class="date">Created: 2014-09-26 Fri 10:36</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.50.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
+<p class="date">Created: 2014-10-03 Fri 21:13</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
