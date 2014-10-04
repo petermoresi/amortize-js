@@ -3,8 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>amortize.js</title>
-<!-- 2014-10-03 Fri 21:13 -->
+<title>index</title>
+<!-- 2014-10-03 Fri 21:43 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Peter Moresi" />
@@ -147,7 +147,7 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">amortize.js</h1>
+<h1 class="title">index</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -172,7 +172,11 @@ for the JavaScript code in this tag.
 <li><a href="#sec-3-3">3.3. Test</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Amortize.js</a></li>
+<li><a href="#sec-4">4. Amortize.js</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Download</a></li>
+</ul>
+</li>
 <li><a href="#sec-5">5. Product</a></li>
 </ul>
 </div>
@@ -527,12 +531,43 @@ Finally, define the compute-schedule function.
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> Amortize.js</h2>
 <div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Download</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
-Download the complete source code:  <a href="amortize.js">amortize.js</a>
+24 sweet lines of source code:  <a href="amortize.js">amortize.js</a>
+</p>
+
+<p>
+<textarea cols="70" rows="23">
+function pmt(rate,nper,pv) {
+    var pvif, pmt;
+
+    pvif = Math.pow( 1 + rate, nper);
+    pmt = rate / (pvif - 1) * -(pv * pvif);   
+
+    return pmt;
+};
+function compute_schedule(loan_amount, interest_rate, payments_per_year, years, payment) {
+    var schedule = [];
+    var remaining = loan_amount;
+    var number_of_payments = payments_per_year * years;
+
+    for (var i=0; i<=number_of_payments; i++) {
+	var interest = remaining * (interest_rate/100/payments_per_year);
+	var principle = (payment-interest);
+	var row = [i, payment.toFixed(2), principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+	schedule.push(row);
+	remaining -= principle
+    }
+
+    return schedule;
+}
+</textarea>
 </p>
 </div>
 </div>
-
+</div>
 <div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> Product</h2>
 <div class="outline-text-2" id="text-5">
@@ -543,7 +578,7 @@ Download the complete source code:  <a href="amortize.js">amortize.js</a>
 <div id="postamble" class="status">
 <p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2014-09-26 Fri&gt;</span></span></p>
 <p class="author">Author: Peter Moresi</p>
-<p class="date">Created: 2014-10-03 Fri 21:13</p>
+<p class="date">Created: 2014-10-03 Fri 21:43</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

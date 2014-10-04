@@ -169,17 +169,19 @@
    #+RESULTS: run-compute-schedule
 
 * Amortize.js
-#+NAME: amortize-js
-  #+BEGIN_SRC js :exports none :tangle amortize.js :noweb yes
+** Download
+   24 sweet lines of source code:  [[file:amortize.js]]
+
+#+NAME: amortize-js   
+#+ATTR_HTML: :textarea t :width 80 :rows 24
+  #+BEGIN_SRC js :exports code :tangle amortize.js :noweb yes
     <<pmt-function>>
     <<compute-schedule-function>>
   #+END_SRC
 
-  Download the complete source code:  [[file:amortize.js]]
-   
-* Test Page							   :noexport:
-  This page loads 3rd party code from CDN and embedded the JavaScript inline.
-** HTML
+** Test Page							   :noexport:
+   This page loads 3rd party code from CDN and embedded the JavaScript inline.
+*** HTML
 #+BEGIN_SRC html :tangle test-page.html :noweb yes
 <!DOCTYPE html>
 <html lang="en">
@@ -244,7 +246,7 @@
   </body>
 </html>
 #+END_SRC
-** JavaScript
+*** JavaScript
 #+NAME: test-page-js
 #+BEGIN_SRC js :noweb yes
   <<amortize-js>>
