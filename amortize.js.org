@@ -1,7 +1,9 @@
+#+SETUPFILE: setup.org
 #+NAME: Amortize.js
 #+AUTHOR: Peter Moresi
 #+DATE: <2014-09-26 Fri>
 #+OPTIONS: ^:nil
+
 
 * Overview
 
@@ -26,7 +28,7 @@
   | nper | is the total number of payments for the loan.                                                                                                                                       |
   | pv   | is the present value, or the total amount that a series of future payments is worth now; also known as the principal.                                                               |
 
-** Source Code 							   :noexport:
+** Source Code 							   
 
    The function signature in JavaScript.
 
@@ -63,11 +65,11 @@
      };
    #+END_SRC
 
-** Tests							   :noexport:
+** Tests							   
 *** Should be 297.47
 
    #+NAME: run-pmt
-   #+BEGIN_SRC js :noweb yes :var interest_rate=4.5 payments_per_year=12 years=3 loan_amount=10000
+   #+BEGIN_SRC js :exports both :noweb yes :var interest_rate=4.5 payments_per_year=12 years=3 loan_amount=10000
      <<pmt-function>>
      return pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount).toFixed(2);
    #+END_SRC
@@ -97,7 +99,7 @@
   | years             | is the number of years.                            |
   | payment           | is the amount of the payment each period.          |
 
-** JavaScript							   :noexport:
+** JavaScript							   
    
    The function signature is:
 
@@ -156,9 +158,9 @@
      }
    #+END_SRC
 
-** Test								   :noexport:
+** Test								   
    #+NAME: run-compute-schedule
-   #+BEGIN_SRC js :noweb yes :var loan_amount=10000 interest_rate=4.5 payments_per_year=12 years=3 payment=297.47
+   #+BEGIN_SRC js :exports code :noweb yes :var loan_amount=10000 interest_rate=4.5 payments_per_year=12 years=3 payment=297.47
      <<compute-schedule-function>>
 
      return compute_schedule(loan_amount, interest_rate, payments_per_year, years, payment)
@@ -167,7 +169,7 @@
    #+RESULTS: run-compute-schedule
 
 * Amortize.js
-
+#+NAME: amortize-js
   #+BEGIN_SRC js :exports none :tangle amortize.js :noweb yes
     <<pmt-function>>
     <<compute-schedule-function>>
@@ -175,57 +177,9 @@
 
   Download the complete source code:  [[file:amortize.js]]
    
-** Test Page							   :noexport:
-
-#+NAME: test-page-js
-#+BEGIN_SRC js :noweb yes
-  <<pmt-function>>
-
-  <<compute-schedule-function>>
-
-  function getDataSet() { 
-      var loan_amount = parseFloat( $('#loan_amount').val() );
-      var interest_rate = parseFloat( $('#interest_rate').val() );
-      var payments_per_year = parseInt( $('#payments_per_year').val() );
-      var years = parseInt( $('#years').val() );
-                                     
-      var payment = pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount);
-      
-      return compute_schedule(loan_amount,
-                              interest_rate,
-                              payments_per_year,
-                              years,
-                              payment);
-  }
-
-  function reloadTable() {
-      $('#demo').empty();
-      $('#demo').html( '<table cellpadding="0" cellspacing="0" border="0" class="display table" id="example"></table>' );
-      $('#example').dataTable( {
-          "data": getDataSet(),
-          "columns": [
-              { "title": "Period" },
-              { "title": "Payment" },
-              { "title": "Principle" },
-              { "title": "Interest" },
-              { "title": "Remaining" }
-          ],
-          "search": false,
-          "paging":   false,
-          "ordering": false,
-          "info":     false
-      } );   
-  }
-
-  $(document).ready(function() {
-      reloadTable();
-
-      $(document).on('keyup', '.user-input', function(e) {
-          reloadTable();
-      });
-  });
-#+END_SRC
-
+* Test Page							   :noexport:
+  This page loads 3rd party code from CDN and embedded the JavaScript inline.
+** HTML
 #+BEGIN_SRC html :tangle test-page.html :noweb yes
 <!DOCTYPE html>
 <html lang="en">
@@ -290,3 +244,52 @@
   </body>
 </html>
 #+END_SRC
+** JavaScript
+#+NAME: test-page-js
+#+BEGIN_SRC js :noweb yes
+  <<amortize-js>>
+
+  function getDataSet() { 
+      var loan_amount = parseFloat( $('#loan_amount').val() );
+      var interest_rate = parseFloat( $('#interest_rate').val() );
+      var payments_per_year = parseInt( $('#payments_per_year').val() );
+      var years = parseInt( $('#years').val() );
+                                     
+      var payment = pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount);
+      
+      return compute_schedule(loan_amount,
+                              interest_rate,
+                              payments_per_year,
+                              years,
+                              payment);
+  }
+
+  function reloadTable() {
+      $('#demo').empty();
+      $('#demo').html( '<table cellpadding="0" cellspacing="0" border="0" class="display table" id="example"></table>' );
+      $('#example').dataTable( {
+          "data": getDataSet(),
+          "columns": [
+              { "title": "Period" },
+              { "title": "Payment" },
+              { "title": "Principle" },
+              { "title": "Interest" },
+              { "title": "Remaining" }
+          ],
+          "search": false,
+          "paging":   false,
+          "ordering": false,
+          "info":     false
+      } );   
+  }
+
+  $(document).ready(function() {
+      reloadTable();
+
+      $(document).on('keyup', '.user-input', function(e) {
+          reloadTable();
+      });
+  });
+#+END_SRC
+* Product
+#+HTML: <iframe src="test-page.html" />
