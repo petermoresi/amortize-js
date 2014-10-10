@@ -95,7 +95,7 @@
                                        
         var payment = pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount);
         
-        $('#payment_amount').text(payment);
+        $('#payment_amount').text(payment.toFixed(2));
     
         return compute_schedule(loan_amount,
                                 interest_rate,
