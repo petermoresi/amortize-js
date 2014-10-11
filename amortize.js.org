@@ -30,7 +30,7 @@
   | pv   | is the present value, or the total amount that a series of future payments is worth now; also known as the principal.                                                               |
 
 ** Source Code 							   
-   1. The function signature in JavaScript.
+   1. The function signature:
       #+NAME: define-pmt
       #+BEGIN_SRC js 
         pmt(rate,nper,pv)
@@ -90,7 +90,7 @@
   | payments_per_year | is the number of payments made in a calendar year. |
   | years             | is the number of years.                            |
   | payment           | is the amount of the payment each period.          |
-
+  |-------------------+----------------------------------------------------|
 ** JavaScript							   
    1. The function signature is:
       #+NAME: define-compute-schedule
