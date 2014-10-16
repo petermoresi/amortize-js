@@ -6,8 +6,8 @@ The HTML program documentation is at [http://petermoresi.github.io/loan-calculat
 
 The demo page is at [petermoresi.github.io/loan-calculator-js/loan-calculator.html](http://petermoresi.github.io/loan-calculator-js/loan-calculator.js).
 
+For the source code (e.g literate program) please see [amortize.js.org](./amortize.js.org). 
+
 Credits
 --
 The HTML theme for the demo is greatly improved through the use of [org-html-themes](https://github.com/fniessen/org-html-themes).
-
-For the source code (e.g literate program) please see [amortize.js.org](./amortize.js.org). 
