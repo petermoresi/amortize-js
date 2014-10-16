@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Loan Calculator in JavaScript</title>
-<!-- 2014-10-15 Wed 22:09 -->
+<!-- 2014-10-16 Thu 08:47 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Peter Moresi" />
@@ -152,7 +152,12 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Overview</a></li>
+<li><a href="#sec-1">1. Overview</a>
+<ul>
+<li><a href="#sec-1-1">1.1. What is this?</a></li>
+<li><a href="#sec-1-2">1.2. About this work</a></li>
+</ul>
+</li>
 <li><a href="#sec-2">2. Compute Payment</a>
 <ul>
 <li><a href="#sec-2-1">2.1. Overview</a></li>
@@ -172,11 +177,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-3-3">3.3. Test</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Amortize.js</a>
-<ul>
-<li><a href="#sec-4-1">4.1. Download</a></li>
-</ul>
-</li>
+<li><a href="#sec-4">4. Amortize.js</a></li>
 <li><a href="#sec-5">5. Demo</a></li>
 </ul>
 </div>
@@ -186,8 +187,11 @@ for the JavaScript code in this tag.
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> What is this?</h3>
+<div class="outline-text-3" id="text-1-1">
 <p>
-Implement JavaScript library with functions:
+A small JavaScript library with two functions:
 </p>
 
 <table id="functions" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -200,8 +204,8 @@ Implement JavaScript library with functions:
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">variable name</th>
-<th scope="col" class="left">comments</th>
+<th scope="col" class="left">function name</th>
+<th scope="col" class="left">purpose</th>
 </tr>
 </thead>
 <tbody>
@@ -218,7 +222,19 @@ Implement JavaScript library with functions:
 </table>
 </div>
 </div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> About this work</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+This is the generated documentation for a <a href="./amortize.js">literate program</a> authored in <a href="http://www.org-mode.org">org-mode</a>.
+</p>
 
+<p>
+The generate documentation using <a href="https://github.com/fniessen/org-html-themes">org-html-themes</a> for improved layout.
+</p>
+</div>
+</div>
+</div>
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> Compute Payment</h2>
 <div class="outline-text-2" id="text-2">
@@ -699,40 +715,36 @@ payment: 297.47
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> Amortize.js</h2>
 <div class="outline-text-2" id="text-4">
-</div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Download</h3>
-<div class="outline-text-3" id="text-4-1">
 <p>
-24 sweet lines of source code:  <a href="amortize.js">amortize.js</a>
+24 sweet lines of source code.
 </p>
-<p>
-<textarea cols="80" rows="24">
-function pmt(rate,nper,pv) {
-    var pvif, pmt;
+<div class="org-src-container">
+
+<pre class="src src-js" id="amortize-js"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">pvif</span>, <span style="color: #BA36A5;">pmt</span>;
 
     pvif = Math.pow( 1 + rate, nper);
     pmt = rate / (pvif - 1) * -(pv * pvif);   
 
-    return pmt;
+    <span style="color: #0000FF;">return</span> pmt;
 };
 
-function compute_schedule(loan_amount, interest_rate, payments_per_year, years, payment) {
-    var schedule = [];
-    var remaining = loan_amount;
-    var number_of_payments = payments_per_year * years;
+<span style="color: #0000FF;">function</span> <span style="color: #006699;">compute_schedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
 
-    for (var i=0; i<=number_of_payments; i++) {
-	var interest = remaining * (interest_rate/100/payments_per_year);
-	var principle = (payment-interest);
-	var row = [i, principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
-	schedule.push(row);
-	remaining -= principle
+    <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+        schedule.push(row);
+        remaining -= principle
     }
 
-    return schedule;
+    <span style="color: #0000FF;">return</span> schedule;
 }
-</textarea>
-</p>
+</pre>
 </div>
 </div>
 </div>
@@ -740,16 +752,19 @@ function compute_schedule(loan_amount, interest_rate, payments_per_year, years, 
 <h2 id="sec-5"><span class="section-number-2">5</span> Demo</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-This page will not send any information to a remote server. The calculation is performed inside your browser.
+The <a href="./loan-calculator.html">demo page</a> shows a working example of using these functions. 
 </p>
-<iframe src="test-page.html" style="width: 600px; height: 500px; scroll: auto"/>
+
+<p>
+The page uses jquery, twitter bootstrap and datatables.net.
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2014-09-26</p>
 <p class="author">Author: Peter Moresi</p>
-<p class="date">Created: 2014-10-15 Wed 22:09</p>
+<p class="date">Created: 2014-10-16 Thu 08:47</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

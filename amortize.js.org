@@ -7,15 +7,21 @@
 #+HTML: <a href="https://github.com/petermoresi/loan-calculator-js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
 * Overview
+** What is this?
 
-  Implement JavaScript library with functions:
+  A small JavaScript library with two functions:
 
   #+NAME: functions
-  | variable name    | comments                                                  |
+  |------------------+-----------------------------------------------------------|
+  | function name    | purpose                                                   |
   |------------------+-----------------------------------------------------------|
   | pmt              | Calculate amortized payment                               |
   | compute-schedule | Computes amortization schedule as multi-dimensional array |
+  |------------------+-----------------------------------------------------------|
+** About this work
+  This is the generated documentation for a [[./amortize.js][literate program]] authored in [[http://www.org-mode.org][org-mode]].
 
+  The generate documentation using [[https://github.com/fniessen/org-html-themes][org-html-themes]] for improved layout.
 * Compute Payment
 ** Overview
   The function to compute payment amount is named 'pmt'.
@@ -160,22 +166,20 @@
    : [[0,"259.97","37.50","10000.00"],[1,"260.94","36.53","9740.03"],[2,"261.92","35.55","9479.09"],[3,"262.91","34.56","9217.16"],[4,"263.89","33.58","8954.26"],[5,"264.88","32.59","8690.36"],[6,"265.87","31.60","8425.48"],[7,"266.87","30.60","8159.61"],[8,"267.87","29.60","7892.74"],[9,"268.88","28.59","7624.87"],[10,"269.89","27.58","7355.99"],[11,"270.90","26.57","7086.10"],[12,"271.91","25.56","6815.21"],[13,"272.93","24.54","6543.29"],[14,"273.96","23.51","6270.36"],[15,"274.98","22.49","5996.40"],[16,"276.01","21.46","5721.42"],[17,"277.05","20.42","5445.41"],[18,"278.09","19.38","5168.36"],[19,"279.13","18.34","4890.27"],[20,"280.18","17.29","4611.14"],[21,"281.23","16.24","4330.96"],[22,"282.28","15.19","4049.73"],[23,"283.34","14.13","3767.45"],[24,"284.40","13.07","3484.10"],[25,"285.47","12.00","3199.70"],[26,"286.54","10.93","2914.23"],[27,"287.62","9.85","2627.69"],[28,"288.69","8.78","2340.07"],[29,"289.78","7.69","2051.38"],[30,"290.86","6.61","1761.60"],[31,"291.95","5.52","1470.73"],[32,"293.05","4.42","1178.78"],[33,"294.15","3.32","885.73"],[34,"295.25","2.22","591.58"],[35,"296.36","1.11","296.33"],[36,"297.47","-0.00","-0.03"]]
 
 * Amortize.js
-** Download
-   24 sweet lines of source code:  [[file:amortize.js]]
+   24 sweet lines of source code.
 #+NAME: amortize-js   
-#+BEGIN_SRC js :exports none :noweb yes :tangle amortize.js
+#+BEGIN_SRC js :exports code :noweb yes :tangle amortize.js
     <<pmt-function>>
 
     <<compute-schedule-function>>
 #+END_SRC
-#+ATTR_HTML: :textarea t :width 80 :rows 24
-  #+BEGIN_SRC js :exports code :noweb yes
-    <<amortize-js>>
-  #+END_SRC
-** Test Page							   :noexport:
-   This page loads 3rd party code from CDN and embedded the JavaScript inline.
-*** HTML
-#+BEGIN_SRC html :tangle test-page.html :noweb yes
+* Demo
+  The [[./loan-calculator.html][demo page]] shows a working example of using these functions. 
+ 
+ The page uses jquery, twitter bootstrap and datatables.net.
+
+*** HTML							   :noexport:
+#+BEGIN_SRC html :tangle loan-calculator.html :noweb yes
   <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -245,8 +249,8 @@
     </body>
   </html>
 #+END_SRC
-*** JavaScript
-#+NAME: test-page-js
+*** JavaScript							   :noexport:
+#+NAME: loan-calculator-js
 #+BEGIN_SRC js :noweb yes
   <<amortize-js>>
 
@@ -293,6 +297,3 @@
       });
   });
 #+END_SRC
-* Demo
-This page will not send any information to a remote server. The calculation is performed inside your browser.
-#+HTML: <iframe src="test-page.html" style="width: 600px; height: 500px; scroll: auto"/>
