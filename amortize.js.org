@@ -29,11 +29,13 @@
   The function accepts arguments:
 
   #+NAME: pmt-args
-  | name | comments                                                                                                                                                                            |
-  |------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | rate | is the interest rate for the loan.                                                                                                                                                  |
-  | nper | is the total number of payments for the loan.                                                                                                                                       |
-  | pv   | is the present value, or the total amount that a series of future payments is worth now; also known as the principal.                                                               |
+  |------+-----------------------------------------------------------------------------------------------------------------------|
+  | name | comments                                                                                                              |
+  |------+-----------------------------------------------------------------------------------------------------------------------|
+  | rate | is the interest rate for the loan.                                                                                    |
+  | nper | is the total number of payments for the loan.                                                                         |
+  | pv   | is the present value, or the total amount that a series of future payments is worth now; also known as the principal. |
+  |------+-----------------------------------------------------------------------------------------------------------------------|
 
 ** Source Code 							   
    1. The function signature:
@@ -89,6 +91,7 @@
   The function accepts arguments:
   
   #+NAME: compute-schedule-args
+  |-------------------+----------------------------------------------------|
   | name              | comments                                           |
   |-------------------+----------------------------------------------------|
   | loan_amount       | is the amount borrowed to purchase the property.   |
