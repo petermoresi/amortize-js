@@ -1,4 +1,4 @@
-#+SETUPFILE: setup.org
+#+SETUPFILE: Loan Calculator in JavaScript
 #+NAME: Amortize.js
 #+AUTHOR: Peter Moresi
 #+DATE: <2014-09-26 Fri>
