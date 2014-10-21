@@ -1,4 +1,4 @@
-Loan Calculator
+Amortize Functions (JavaScript)
 --
 This work is a literate program to calculate an amortization schedule that produces JavaScript source code. The author used the amazing [org-mode](http://org-mode.org) that works inside the powerful GNU Emacs editor.
 
