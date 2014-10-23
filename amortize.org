@@ -1,0 +1,149 @@
+# -*- mode: org; -*-
+#+SETUPFILE: setup.org
+#+TITLE: Amortize.js
+#+AUTHOR: Peter Moresi
+#+DATE: <2014-09-26 Fri>
+#+OPTIONS: ^:nil
+
+#+HTML: <a href="https://github.com/petermoresi/amortize-js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+* About this program						       :info:
+
+  This is a [[http://orgmode.org/worg/org-contrib/babel/][literate program]] authored in [[http://www.org-mode.org][org-mode]].
+
+  The generate source is [[./amortize.js][amortize.js]]. The documentation uses [[https://github.com/fniessen/org-html-themes][org-html-themes]].
+
+* Source Code							       :code:
+
+  The source code is written JavaScript; and implements:
+
+  #+NAME: functions
+  |------------------+-----------------------------------------------------------|
+  | function name    | purpose                                                   |
+  |------------------+-----------------------------------------------------------|
+  | pmt              | Calculate amortized payment                               |
+  | compute-schedule | Computes amortization schedule as multi-dimensional array |
+  |------------------+-----------------------------------------------------------|
+
+** Calculate Payment
+
+   The function to compute payment amount is named 'pmt'.
+   
+   The function accepts arguments:
+
+   #+NAME: pmt-args
+   |------+-----------------------------------------------------------------------------------------------------------------------|
+   | name | comments                                                                                                              |
+   |------+-----------------------------------------------------------------------------------------------------------------------|
+   | rate | is the interest rate for the loan.                                                                                    |
+   | nper | is the total number of payments for the loan.                                                                         |
+   | pv   | is the present value, or the total amount that a series of future payments is worth now; also known as the principal. |
+   |------+-----------------------------------------------------------------------------------------------------------------------|
+
+   1. The function signature:
+      #+NAME: define-pmt
+      #+BEGIN_SRC js 
+        pmt(rate,nper,pv)
+      #+END_SRC
+   2. In order to calculate the payment we need to first calculate the Present Value Interest Factor (PVIF).o
+      #+NAME: calculate-pvif
+      #+BEGIN_SRC js
+         pvif = Math.pow( 1 + rate, nper);
+      #+END_SRC
+   3. Using the PVIF we can calculate the payment.
+      #+NAME: calculate-pmt
+      #+BEGIN_SRC js
+        pmt = rate / (pvif - 1) * -(pv * pvif);
+      #+END_SRC
+   4. Finally, the sections are combined into a function.
+      #+NAME: pmt
+      #+BEGIN_SRC js :noweb yes
+        function <<define-pmt>> {
+            var pvif, pmt;
+
+            <<calculate-pvif>>
+            <<calculate-pmt>>   
+
+            return pmt;
+        };
+      #+END_SRC
+
+** Calculate Schedule
+
+   The 'computeSchedule' function to compute amortization schedule is named 'computeSchedule'.
+
+   The function accepts arguments:
+   
+   #+NAME: compute-schedule-args
+   |-------------------+----------------------------------------------------|
+   | name              | comments                                           |
+   |-------------------+----------------------------------------------------|
+   | loan_amount       | is the amount borrowed to purchase the property.   |
+   | interest_rate     | is the percentage used to calculate interest due.  |
+   | payments_per_year | is the number of payments made in a calendar year. |
+   | years             | is the number of years.                            |
+   | payment           | is the amount of the payment each period.          |
+   |-------------------+----------------------------------------------------|
+
+   1. The function signature is:
+      #+NAME: define-compute-schedule
+      #+BEGIN_SRC js
+        computeSchedule(loan_amount, interest_rate, payments_per_year, years, payment)
+      #+END_SRC
+   2. Define an array to capture the schedule.
+      #+NAME: define-schedule-array
+      #+BEGIN_SRC js
+        var schedule = [];
+      #+END_SRC
+   3. Define a variable to track the remaining balance.
+      #+NAME: define-remaining-balance
+      #+BEGIN_SRC js
+        var remaining = loan_amount;
+      #+END_SRC
+   4. Compute the total number of payments.
+      #+NAME: compute-number-of-payments
+      #+BEGIN_SRC js
+        var number_of_payments = payments_per_year * years;
+      #+END_SRC
+   5. Loop through all of the periods and capture the entries in the schedule.
+      #+NAME: loop-schedule
+      #+BEGIN_SRC js
+        for (var i=0; i<=number_of_payments; i++) {
+            var interest = remaining * (interest_rate/100/payments_per_year);
+            var principle = (payment-interest);
+            var row = [i, principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+            schedule.push(row);
+            remaining -= principle
+        }
+      #+END_SRC
+   6. Finally, the sections are combined into a function.
+      #+NAME: compute-schedule
+      #+BEGIN_SRC js :noweb yes
+        function <<define-compute-schedule>> {
+            <<define-schedule-array>>
+            <<define-remaining-balance>>
+            <<compute-number-of-payments>>
+
+            <<loop-schedule>>
+
+            return schedule;
+        }
+      #+END_SRC
+* Script
+  Using noweb macros the two functions are combined into a single script
+  #+BEGIN_SRC js :tangle amortize.js :noweb yes
+  <<pmt>>
+  <<compute-schedule>>
+  #+END_SRC
+* Tests 							       :code:
+** Should be 297.47
+
+  #+NAME: run-pmt
+  #+BEGIN_SRC js :exports results :results output raw :noweb yes :var interest_rate=4.5 payments_per_year=12 years=3 loan_amount=10000
+    <<pmt-function>>
+    console.log( "The calculated payment is: " + pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount).toFixed(2) );
+  #+END_SRC
+
+** Should be 2245.22
+
+   #+CALL: run-pmt(interest_rate=3.5, payments_per_year=12, years=30, loan_amount=500000)

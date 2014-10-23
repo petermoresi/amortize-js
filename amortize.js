@@ -7,7 +7,6 @@ function pmt(rate,nper,pv) {
 
     return pmt;
 };
-
 function compute_schedule(loan_amount, interest_rate, payments_per_year, years, payment) {
     var schedule = [];
     var remaining = loan_amount;

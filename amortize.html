@@ -3,8 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Loan Calculator in JavaScript</title>
-<!-- 2014-10-16 Thu 08:47 -->
+<title>Amortize.js</title>
+<!-- 2014-10-22 Wed 23:19 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Peter Moresi" />
@@ -88,16 +88,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+<link rel="stylesheet" type="text/css" href="css/worg.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -147,51 +138,48 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Loan Calculator in JavaScript</h1>
+<h1 class="title">Amortize.js</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Overview</a>
+<li><a href="#sec-1">1. About this program</a></li>
+<li><a href="#sec-2">2. Source Code</a>
 <ul>
-<li><a href="#sec-1-1">1.1. What is this?</a></li>
-<li><a href="#sec-1-2">1.2. About this work</a></li>
+<li><a href="#sec-2-1">2.1. Calculate Payment</a></li>
+<li><a href="#sec-2-2">2.2. Calculate Schedule</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Compute Payment</a>
+<li><a href="#sec-3">3. Script</a></li>
+<li><a href="#sec-4">4. Tests</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Overview</a></li>
-<li><a href="#sec-2-2">2.2. Source Code</a></li>
-<li><a href="#sec-2-3">2.3. Tests</a>
-<ul>
-<li><a href="#sec-2-3-1">2.3.1. Should be 297.47</a></li>
-<li><a href="#sec-2-3-2">2.3.2. Should be 2245.22</a></li>
+<li><a href="#sec-4-1">4.1. Should be 297.47</a></li>
+<li><a href="#sec-4-2">4.2. Should be 2245.22</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#sec-3">3. Compute Schedule</a>
-<ul>
-<li><a href="#sec-3-1">3.1. Overview</a></li>
-<li><a href="#sec-3-2">3.2. JavaScript</a></li>
-<li><a href="#sec-3-3">3.3. Test</a></li>
-</ul>
-</li>
-<li><a href="#sec-4">4. Amortize.js</a></li>
-<li><a href="#sec-5">5. Demo</a></li>
 </ul>
 </div>
 </div>
-<a href="https://github.com/petermoresi/loan-calculator-js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+<a href="https://github.com/petermoresi/amortize-js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Overview</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> About this program&#xa0;&#xa0;&#xa0;<span class="tag"><span class="info">info</span></span></h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> What is this?</h3>
-<div class="outline-text-3" id="text-1-1">
 <p>
-A small JavaScript library with two functions:
+This is a <a href="http://orgmode.org/worg/org-contrib/babel/">literate program</a> authored in <a href="http://www.org-mode.org">org-mode</a>.
+</p>
+
+<p>
+The generate source is <a href="./amortize.js">amortize.js</a>. The documentation uses <a href="https://github.com/fniessen/org-html-themes">org-html-themes</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Source Code&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The source code is written JavaScript; and implements:
 </p>
 
 <table id="functions" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -221,25 +209,9 @@ A small JavaScript library with two functions:
 </tbody>
 </table>
 </div>
-</div>
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> About this work</h3>
-<div class="outline-text-3" id="text-1-2">
-<p>
-This is the generated documentation for a <a href="./amortize.js">literate program</a> authored in <a href="http://www.org-mode.org">org-mode</a>.
-</p>
 
-<p>
-The generate documentation using <a href="https://github.com/fniessen/org-html-themes">org-html-themes</a> for improved layout.
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Compute Payment</h2>
-<div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Overview</h3>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Calculate Payment</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 The function to compute payment amount is named 'pmt'.
@@ -280,12 +252,7 @@ The function accepts arguments:
 </tr>
 </tbody>
 </table>
-</div>
-</div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Source Code</h3>
-<div class="outline-text-3" id="text-2-2">
 <ol class="org-ol">
 <li>The function signature:
 <div class="org-src-container">
@@ -311,7 +278,7 @@ The function accepts arguments:
 <li>Finally, the sections are combined into a function.
 <div class="org-src-container">
 
-<pre class="src src-js" id="pmt-function"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
+<pre class="src src-js" id="pmt"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">pvif</span>, <span style="color: #BA36A5;">pmt</span>;
 
     pvif = Math.pow( 1 + rate, nper);
@@ -325,37 +292,12 @@ The function accepts arguments:
 </ol>
 </div>
 </div>
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Tests</h3>
-<div class="outline-text-3" id="text-2-3">
-</div><div id="outline-container-sec-2-3-1" class="outline-4">
-<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Should be 297.47</h4>
-<div class="outline-text-4" id="text-2-3-1">
-<pre class="example">
-297.47
-</pre>
-</div>
-</div>
 
-<div id="outline-container-sec-2-3-2" class="outline-4">
-<h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> Should be 2245.22</h4>
-<div class="outline-text-4" id="text-2-3-2">
-<pre class="example">
-2245.22
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Compute Schedule</h2>
-<div class="outline-text-2" id="text-3">
-</div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Overview</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Calculate Schedule</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
-The function to compute amortization schedule is named 'compute_schedule'.
+The 'computeSchedule' function to compute amortization schedule is named 'computeSchedule'.
 </p>
 
 <p>
@@ -403,16 +345,12 @@ The function accepts arguments:
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> JavaScript</h3>
-<div class="outline-text-3" id="text-3-2">
+
 <ol class="org-ol">
 <li>The function signature is:
 <div class="org-src-container">
 
-<pre class="src src-js" id="define-compute-schedule">compute_schedule(loan_amount, interest_rate, payments_per_year, years, payment)
+<pre class="src src-js" id="define-compute-schedule">computeSchedule(loan_amount, interest_rate, payments_per_year, years, payment)
 </pre>
 </div>
 </li>
@@ -453,7 +391,7 @@ The function accepts arguments:
 <li>Finally, the sections are combined into a function.
 <div class="org-src-container">
 
-<pre class="src src-js" id="compute-schedule-function"><span style="color: #0000FF;">function</span> <span style="color: #006699;">compute_schedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
+<pre class="src src-js" id="compute-schedule"><span style="color: #0000FF;">function</span> <span style="color: #006699;">computeSchedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
@@ -474,253 +412,16 @@ The function accepts arguments:
 </ol>
 </div>
 </div>
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Test</h3>
-<div class="outline-text-3" id="text-3-3">
-<pre class="example">
-loan_amount: 10000
-interest_rate: 4.5
-payments_per_year: 12
-years: 3
-payment: 297.47
-[
-    [
-	0,
-	"259.97",
-	"37.50",
-	"10000.00"
-    ],
-    [
-	1,
-	"260.94",
-	"36.53",
-	"9740.03"
-    ],
-    [
-	2,
-	"261.92",
-	"35.55",
-	"9479.09"
-    ],
-    [
-	3,
-	"262.91",
-	"34.56",
-	"9217.16"
-    ],
-    [
-	4,
-	"263.89",
-	"33.58",
-	"8954.26"
-    ],
-    [
-	5,
-	"264.88",
-	"32.59",
-	"8690.36"
-    ],
-    [
-	6,
-	"265.87",
-	"31.60",
-	"8425.48"
-    ],
-    [
-	7,
-	"266.87",
-	"30.60",
-	"8159.61"
-    ],
-    [
-	8,
-	"267.87",
-	"29.60",
-	"7892.74"
-    ],
-    [
-	9,
-	"268.88",
-	"28.59",
-	"7624.87"
-    ],
-    [
-	10,
-	"269.89",
-	"27.58",
-	"7355.99"
-    ],
-    [
-	11,
-	"270.90",
-	"26.57",
-	"7086.10"
-    ],
-    [
-	12,
-	"271.91",
-	"25.56",
-	"6815.21"
-    ],
-    [
-	13,
-	"272.93",
-	"24.54",
-	"6543.29"
-    ],
-    [
-	14,
-	"273.96",
-	"23.51",
-	"6270.36"
-    ],
-    [
-	15,
-	"274.98",
-	"22.49",
-	"5996.40"
-    ],
-    [
-	16,
-	"276.01",
-	"21.46",
-	"5721.42"
-    ],
-    [
-	17,
-	"277.05",
-	"20.42",
-	"5445.41"
-    ],
-    [
-	18,
-	"278.09",
-	"19.38",
-	"5168.36"
-    ],
-    [
-	19,
-	"279.13",
-	"18.34",
-	"4890.27"
-    ],
-    [
-	20,
-	"280.18",
-	"17.29",
-	"4611.14"
-    ],
-    [
-	21,
-	"281.23",
-	"16.24",
-	"4330.96"
-    ],
-    [
-	22,
-	"282.28",
-	"15.19",
-	"4049.73"
-    ],
-    [
-	23,
-	"283.34",
-	"14.13",
-	"3767.45"
-    ],
-    [
-	24,
-	"284.40",
-	"13.07",
-	"3484.10"
-    ],
-    [
-	25,
-	"285.47",
-	"12.00",
-	"3199.70"
-    ],
-    [
-	26,
-	"286.54",
-	"10.93",
-	"2914.23"
-    ],
-    [
-	27,
-	"287.62",
-	"9.85",
-	"2627.69"
-    ],
-    [
-	28,
-	"288.69",
-	"8.78",
-	"2340.07"
-    ],
-    [
-	29,
-	"289.78",
-	"7.69",
-	"2051.38"
-    ],
-    [
-	30,
-	"290.86",
-	"6.61",
-	"1761.60"
-    ],
-    [
-	31,
-	"291.95",
-	"5.52",
-	"1470.73"
-    ],
-    [
-	32,
-	"293.05",
-	"4.42",
-	"1178.78"
-    ],
-    [
-	33,
-	"294.15",
-	"3.32",
-	"885.73"
-    ],
-    [
-	34,
-	"295.25",
-	"2.22",
-	"591.58"
-    ],
-    [
-	35,
-	"296.36",
-	"1.11",
-	"296.33"
-    ],
-    [
-	36,
-	"297.47",
-	"-0.00",
-	"-0.03"
-    ]
-]
-</pre>
 </div>
-</div>
-</div>
-
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Amortize.js</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Script</h2>
+<div class="outline-text-2" id="text-3">
 <p>
-24 sweet lines of source code.
+Using noweb macros the two functions are combined into a single script
 </p>
 <div class="org-src-container">
 
-<pre class="src src-js" id="amortize-js"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
+<pre class="src src-js"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">pvif</span>, <span style="color: #BA36A5;">pmt</span>;
 
     pvif = Math.pow( 1 + rate, nper);
@@ -728,8 +429,7 @@ payment: 297.47
 
     <span style="color: #0000FF;">return</span> pmt;
 };
-
-<span style="color: #0000FF;">function</span> <span style="color: #006699;">compute_schedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
+<span style="color: #0000FF;">function</span> <span style="color: #006699;">computeSchedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
@@ -748,23 +448,29 @@ payment: 297.47
 </div>
 </div>
 </div>
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Demo</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-The <a href="./loan-calculator.html">demo page</a> shows a working example of using these functions. 
-</p>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Tests&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Should be 297.47</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+</div>
 
-<p>
-The page uses jquery, twitter bootstrap and datatables.net.
-</p>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Should be 2245.22</h3>
+<div class="outline-text-3" id="text-4-2">
+<pre class="example">
+nil
+</pre>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2014-09-26</p>
 <p class="author">Author: Peter Moresi</p>
-<p class="date">Created: 2014-10-16 Thu 08:47</p>
+<p class="date">Created: 2014-10-22 Wed 23:19</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
