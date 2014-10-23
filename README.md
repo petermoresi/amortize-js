@@ -4,7 +4,7 @@ This work is a literate program to calculate an amortization schedule that produ
 
 The HTML program documentation is at [http://petermoresi.github.io/amortize-js/](http://petermoresi.github.io/amortize-js/).
 
-The demo page is at [petermoresi.github.io/amortize-js/loan-calculator.html](http://petermoresi.github.io/amortize-js/loan-calculator.html)
+A example using the code is at [petermoresi.github.io/loan-calculator/loan-calculator.html](http://petermoresi.github.io/amortize-js/loan-calculator.html)
 
 For the source code (e.g literate program) please see [amortize.js.org](https://raw.githubusercontent.com/petermoresi/amortize-js/master/amortize.js.org). 
 

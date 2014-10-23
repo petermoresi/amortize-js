@@ -5,13 +5,11 @@
 #+DATE: <2014-09-26 Fri>
 #+OPTIONS: ^:nil
 
-#+HTML: <a href="https://github.com/petermoresi/amortize-js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-
 * About this program						       :info:
 
   This is a [[http://orgmode.org/worg/org-contrib/babel/][literate program]] authored in [[http://www.org-mode.org][org-mode]].
 
-  The generate source is [[./amortize.js][amortize.js]]. The documentation uses [[https://github.com/fniessen/org-html-themes][org-html-themes]].
+  The program generate a JavaScript file called [[./amortize.js][amortize.js]].
 
 * Source Code							       :code:
 
@@ -21,13 +19,13 @@
   |------------------+-----------------------------------------------------------|
   | function name    | purpose                                                   |
   |------------------+-----------------------------------------------------------|
-  | pmt              | Calculate amortized payment                               |
-  | compute-schedule | Computes amortization schedule as multi-dimensional array |
+  | [[*Calculate Payment][pmt]]              | Calculate amortized payment                               |
+  | [[*Calculate Schedule][compute-schedule]] | Computes amortization schedule as multi-dimensional array |
   |------------------+-----------------------------------------------------------|
 
 ** Calculate Payment
 
-   The function to compute payment amount is named 'pmt'.
+   The function 'pmt' computes the payment amount for a loan.
    
    The function accepts arguments:
 
@@ -111,7 +109,7 @@
         for (var i=0; i<=number_of_payments; i++) {
             var interest = remaining * (interest_rate/100/payments_per_year);
             var principle = (payment-interest);
-            var row = [i, principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+            var row = [i, principle>0?principle:0, interest>0?interest:0, remaining>0?remaining:0];
             schedule.push(row);
             remaining -= principle
         }
@@ -129,9 +127,9 @@
             return schedule;
         }
       #+END_SRC
-* Script
-  Using noweb macros the two functions are combined into a single script
-  #+BEGIN_SRC js :tangle amortize.js :noweb yes
+* Script						      :code:noexport:
+  Use noweb macros to combined the two functions into a single script.
+  #+BEGIN_SRC js :tangle amortize.js :noweb yes :exports code
   <<pmt>>
   <<compute-schedule>>
   #+END_SRC
@@ -139,11 +137,276 @@
 ** Should be 297.47
 
   #+NAME: run-pmt
-  #+BEGIN_SRC js :exports results :results output raw :noweb yes :var interest_rate=4.5 payments_per_year=12 years=3 loan_amount=10000
-    <<pmt-function>>
-    console.log( "The calculated payment is: " + pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount).toFixed(2) );
+  #+BEGIN_SRC js :exports both :results output :noweb yes :var interest_rate=4.5 payments_per_year=12 years=3 loan_amount=10000
+    <<pmt>>
+
+    console.log('loan_amount: ' + loan_amount);
+    console.log('interest_rate: ' + interest_rate);
+    console.log('payments_per_year: ' + payments_per_year);
+    console.log('years: ' + years);
+    console.log( "The calculated payment is: " + 
+                 pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount)
+                 .toFixed(2) );
   #+END_SRC
+
+  #+RESULTS: run-pmt
+  : loan_amount: 10000
+  : interest_rate: 4.5
+  : payments_per_year: 12
+  : years: 3
+  : The calculated payment is: 297.47
 
 ** Should be 2245.22
 
    #+CALL: run-pmt(interest_rate=3.5, payments_per_year=12, years=30, loan_amount=500000)
+
+   #+RESULTS:
+   : The calculated payment is: 2245.22
+
+** Generate Schedule
+   #+NAME: run-compute-schedule
+   #+BEGIN_SRC js :exports both :results output :noweb yes :var loan_amount=10000 interest_rate=4.5 payments_per_year=12 years=3 payment=297.47
+     <<compute-schedule>>
+
+     console.log('loan_amount: ' + loan_amount);
+     console.log('interest_rate: ' + interest_rate);
+     console.log('payments_per_year: ' + payments_per_year);
+     console.log('years: ' + years);
+     console.log('payment: ' + payment);
+     console.log( JSON.stringify(
+         computeSchedule(loan_amount, interest_rate, payments_per_year, years, payment), 0, 4
+     ))
+   #+END_SRC
+
+   #+RESULTS: run-compute-schedule
+   #+begin_example
+   loan_amount: 10000
+   interest_rate: 4.5
+   payments_per_year: 12
+   years: 3
+   payment: 297.47
+   [
+       [
+	   0,
+	   "259.97",
+	   "37.50",
+	   "10000.00"
+       ],
+       [
+	   1,
+	   "260.94",
+	   "36.53",
+	   "9740.03"
+       ],
+       [
+	   2,
+	   "261.92",
+	   "35.55",
+	   "9479.09"
+       ],
+       [
+	   3,
+	   "262.91",
+	   "34.56",
+	   "9217.16"
+       ],
+       [
+	   4,
+	   "263.89",
+	   "33.58",
+	   "8954.26"
+       ],
+       [
+	   5,
+	   "264.88",
+	   "32.59",
+	   "8690.36"
+       ],
+       [
+	   6,
+	   "265.87",
+	   "31.60",
+	   "8425.48"
+       ],
+       [
+	   7,
+	   "266.87",
+	   "30.60",
+	   "8159.61"
+       ],
+       [
+	   8,
+	   "267.87",
+	   "29.60",
+	   "7892.74"
+       ],
+       [
+	   9,
+	   "268.88",
+	   "28.59",
+	   "7624.87"
+       ],
+       [
+	   10,
+	   "269.89",
+	   "27.58",
+	   "7355.99"
+       ],
+       [
+	   11,
+	   "270.90",
+	   "26.57",
+	   "7086.10"
+       ],
+       [
+	   12,
+	   "271.91",
+	   "25.56",
+	   "6815.21"
+       ],
+       [
+	   13,
+	   "272.93",
+	   "24.54",
+	   "6543.29"
+       ],
+       [
+	   14,
+	   "273.96",
+	   "23.51",
+	   "6270.36"
+       ],
+       [
+	   15,
+	   "274.98",
+	   "22.49",
+	   "5996.40"
+       ],
+       [
+	   16,
+	   "276.01",
+	   "21.46",
+	   "5721.42"
+       ],
+       [
+	   17,
+	   "277.05",
+	   "20.42",
+	   "5445.41"
+       ],
+       [
+	   18,
+	   "278.09",
+	   "19.38",
+	   "5168.36"
+       ],
+       [
+	   19,
+	   "279.13",
+	   "18.34",
+	   "4890.27"
+       ],
+       [
+	   20,
+	   "280.18",
+	   "17.29",
+	   "4611.14"
+       ],
+       [
+	   21,
+	   "281.23",
+	   "16.24",
+	   "4330.96"
+       ],
+       [
+	   22,
+	   "282.28",
+	   "15.19",
+	   "4049.73"
+       ],
+       [
+	   23,
+	   "283.34",
+	   "14.13",
+	   "3767.45"
+       ],
+       [
+	   24,
+	   "284.40",
+	   "13.07",
+	   "3484.10"
+       ],
+       [
+	   25,
+	   "285.47",
+	   "12.00",
+	   "3199.70"
+       ],
+       [
+	   26,
+	   "286.54",
+	   "10.93",
+	   "2914.23"
+       ],
+       [
+	   27,
+	   "287.62",
+	   "9.85",
+	   "2627.69"
+       ],
+       [
+	   28,
+	   "288.69",
+	   "8.78",
+	   "2340.07"
+       ],
+       [
+	   29,
+	   "289.78",
+	   "7.69",
+	   "2051.38"
+       ],
+       [
+	   30,
+	   "290.86",
+	   "6.61",
+	   "1761.60"
+       ],
+       [
+	   31,
+	   "291.95",
+	   "5.52",
+	   "1470.73"
+       ],
+       [
+	   32,
+	   "293.05",
+	   "4.42",
+	   "1178.78"
+       ],
+       [
+	   33,
+	   "294.15",
+	   "3.32",
+	   "885.73"
+       ],
+       [
+	   34,
+	   "295.25",
+	   "2.22",
+	   "591.58"
+       ],
+       [
+	   35,
+	   "296.36",
+	   "1.11",
+	   "296.33"
+       ],
+       [
+	   36,
+	   "297.47",
+	   "-0.00",
+	   "-0.03"
+       ]
+   ]
+#+end_example

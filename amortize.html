@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Amortize.js</title>
-<!-- 2014-10-22 Wed 23:19 -->
+<!-- 2014-10-22 Wed 23:38 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Peter Moresi" />
@@ -150,17 +150,16 @@ for the JavaScript code in this tag.
 <li><a href="#sec-2-2">2.2. Calculate Schedule</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Script</a></li>
-<li><a href="#sec-4">4. Tests</a>
+<li><a href="#sec-3">3. Tests</a>
 <ul>
-<li><a href="#sec-4-1">4.1. Should be 297.47</a></li>
-<li><a href="#sec-4-2">4.2. Should be 2245.22</a></li>
+<li><a href="#sec-3-1">3.1. Should be 297.47</a></li>
+<li><a href="#sec-3-2">3.2. Should be 2245.22</a></li>
+<li><a href="#sec-3-3">3.3. Generate Schedule</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<a href="https://github.com/petermoresi/amortize-js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> About this program&#xa0;&#xa0;&#xa0;<span class="tag"><span class="info">info</span></span></h2>
@@ -170,7 +169,7 @@ This is a <a href="http://orgmode.org/worg/org-contrib/babel/">literate program<
 </p>
 
 <p>
-The generate source is <a href="./amortize.js">amortize.js</a>. The documentation uses <a href="https://github.com/fniessen/org-html-themes">org-html-themes</a>.
+The program generate a JavaScript file called <a href="./amortize.js">amortize.js</a>.
 </p>
 </div>
 </div>
@@ -198,12 +197,12 @@ The source code is written JavaScript; and implements:
 </thead>
 <tbody>
 <tr>
-<td class="left">pmt</td>
+<td class="left"><a href="#sec-2-1">pmt</a></td>
 <td class="left">Calculate amortized payment</td>
 </tr>
 
 <tr>
-<td class="left">compute-schedule</td>
+<td class="left"><a href="#sec-2-2">compute-schedule</a></td>
 <td class="left">Computes amortization schedule as multi-dimensional array</td>
 </tr>
 </tbody>
@@ -214,7 +213,7 @@ The source code is written JavaScript; and implements:
 <h3 id="sec-2-1"><span class="section-number-3">2.1</span> Calculate Payment</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
-The function to compute payment amount is named 'pmt'.
+The function 'pmt' computes the payment amount for a loan.
 </p>
 
 <p>
@@ -381,7 +380,7 @@ The function accepts arguments:
 <pre class="src src-js" id="loop-schedule"><span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
-    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?(principle&lt;payment?principle:payment):0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
     schedule.push(row);
     remaining -= principle
 }
@@ -399,7 +398,7 @@ The function accepts arguments:
     <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
         <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
         <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
-        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?(principle&lt;payment?principle:payment):0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
         schedule.push(row);
         remaining -= principle
     }
@@ -414,14 +413,14 @@ The function accepts arguments:
 </div>
 </div>
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Script</h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> Tests&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h2>
 <div class="outline-text-2" id="text-3">
-<p>
-Using noweb macros the two functions are combined into a single script
-</p>
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Should be 297.47</h3>
+<div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 
-<pre class="src src-js"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
+<pre class="src src-js" id="run-pmt"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">pvif</span>, <span style="color: #BA36A5;">pmt</span>;
 
     pvif = Math.pow( 1 + rate, nper);
@@ -429,7 +428,46 @@ Using noweb macros the two functions are combined into a single script
 
     <span style="color: #0000FF;">return</span> pmt;
 };
-<span style="color: #0000FF;">function</span> <span style="color: #006699;">computeSchedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
+
+console.log(<span style="color: #008000;">'loan_amount: '</span> + loan_amount);
+console.log(<span style="color: #008000;">'interest_rate: '</span> + interest_rate);
+console.log(<span style="color: #008000;">'payments_per_year: '</span> + payments_per_year);
+console.log(<span style="color: #008000;">'years: '</span> + years);
+console.log( <span style="color: #008000;">"The calculated payment is: "</span> + 
+             pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount)
+             .toFixed(2) );
+</pre>
+</div>
+
+<pre class="example">
+loan_amount: 10000
+interest_rate: 4.5
+payments_per_year: 12
+years: 3
+The calculated payment is: 297.47
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Should be 2245.22</h3>
+<div class="outline-text-3" id="text-3-2">
+<pre class="example">
+loan_amount: 500000
+interest_rate: 3.5
+payments_per_year: 12
+years: 30
+The calculated payment is: 2245.22
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Generate Schedule</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+
+<pre class="src src-js" id="run-compute-schedule"><span style="color: #0000FF;">function</span> <span style="color: #006699;">computeSchedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
@@ -437,31 +475,255 @@ Using noweb macros the two functions are combined into a single script
     <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
         <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
         <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
-        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle.toFixed(2), interest.toFixed(2), remaining.toFixed(2)];
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?(principle&lt;payment?principle:payment):0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
         schedule.push(row);
         remaining -= principle
     }
 
     <span style="color: #0000FF;">return</span> schedule;
 }
+
+console.log(<span style="color: #008000;">'loan_amount: '</span> + loan_amount);
+console.log(<span style="color: #008000;">'interest_rate: '</span> + interest_rate);
+console.log(<span style="color: #008000;">'payments_per_year: '</span> + payments_per_year);
+console.log(<span style="color: #008000;">'years: '</span> + years);
+console.log(<span style="color: #008000;">'payment: '</span> + payment);
+console.log( JSON.stringify(
+    computeSchedule(loan_amount, interest_rate, payments_per_year, years, payment), 0, 4
+))
 </pre>
 </div>
-</div>
-</div>
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Tests&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h2>
-<div class="outline-text-2" id="text-4">
-</div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Should be 297.47</h3>
-<div class="outline-text-3" id="text-4-1">
-</div>
-</div>
 
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Should be 2245.22</h3>
-<div class="outline-text-3" id="text-4-2">
 <pre class="example">
-nil
+loan_amount: 10000
+interest_rate: 4.5
+payments_per_year: 12
+years: 3
+payment: 297.47
+[
+    [
+	0,
+	259.97,
+	37.5,
+	10000
+    ],
+    [
+	1,
+	260.94488750000005,
+	36.5251125,
+	9740.03
+    ],
+    [
+	2,
+	261.92343082812505,
+	35.546569171875,
+	9479.0851125
+    ],
+    [
+	3,
+	262.9056436937305,
+	34.56435630626953,
+	9217.161681671876
+    ],
+    [
+	4,
+	263.89153985758196,
+	33.578460142418045,
+	8954.256037978146
+    ],
+    [
+	5,
+	264.8811331320479,
+	32.58886686795211,
+	8690.364498120563
+    ],
+    [
+	6,
+	265.8744373812931,
+	31.59556261870693,
+	8425.483364988515
+    ],
+    [
+	7,
+	266.87146652147294,
+	30.59853347852708,
+	8159.608927607222
+    ],
+    [
+	8,
+	267.8722345209285,
+	29.597765479071555,
+	7892.737461085749
+    ],
+    [
+	9,
+	268.87675540038197,
+	28.593244599618075,
+	7624.86522656482
+    ],
+    [
+	10,
+	269.8850432331334,
+	27.584956766866643,
+	7355.988471164438
+    ],
+    [
+	11,
+	270.89711214525767,
+	26.57288785474239,
+	7086.103427931304
+    ],
+    [
+	12,
+	271.9129763158023,
+	25.557023684197674,
+	6815.206315786047
+    ],
+    [
+	13,
+	272.9326499769866,
+	24.537350023013413,
+	6543.293339470244
+    ],
+    [
+	14,
+	273.95614741440033,
+	23.513852585599714,
+	6270.360689493257
+    ],
+    [
+	15,
+	274.98348296720434,
+	22.486517032795714,
+	5996.404542078857
+    ],
+    [
+	16,
+	276.01467102833135,
+	21.455328971668695,
+	5721.4210591116525
+    ],
+    [
+	17,
+	277.0497260446876,
+	20.420273955312453,
+	5445.406388083321
+    ],
+    [
+	18,
+	278.08866251735515,
+	19.381337482644877,
+	5168.356662038634
+    ],
+    [
+	19,
+	279.13149500179526,
+	18.338504998204794,
+	4890.267999521278
+    ],
+    [
+	20,
+	280.17823810805197,
+	17.291761891948063,
+	4611.136504519483
+    ],
+    [
+	21,
+	281.2289065009572,
+	16.24109349904287,
+	4330.958266411431
+    ],
+    [
+	22,
+	282.2835149003358,
+	15.186485099664278,
+	4049.729359910474
+    ],
+    [
+	23,
+	283.342078081212,
+	14.127921918788019,
+	3767.4458450101383
+    ],
+    [
+	24,
+	284.40461087401656,
+	13.065389125983472,
+	3484.1037669289262
+    ],
+    [
+	25,
+	285.4711281647941,
+	11.998871835205911,
+	3199.6991560549095
+    ],
+    [
+	26,
+	286.5416448954121,
+	10.928355104587933,
+	2914.2280278901153
+    ],
+    [
+	27,
+	287.6161760637699,
+	9.853823936230137,
+	2627.6863829947033
+    ],
+    [
+	28,
+	288.69473672400903,
+	8.775263275991001,
+	2340.0702069309336
+    ],
+    [
+	29,
+	289.7773419867241,
+	7.692658013275967,
+	2051.3754702069245
+    ],
+    [
+	30,
+	290.86400701917427,
+	6.605992980825752,
+	1761.5981282202006
+    ],
+    [
+	31,
+	291.95474704549616,
+	5.515252954503849,
+	1470.7341212010263
+    ],
+    [
+	32,
+	293.0495773469168,
+	4.420422653083238,
+	1178.7793741555301
+    ],
+    [
+	33,
+	294.1485132619677,
+	3.3214867380323003,
+	885.7297968086134
+    ],
+    [
+	34,
+	295.2515701867001,
+	2.218429813299921,
+	591.5812835466456
+    ],
+    [
+	35,
+	296.35876357490025,
+	1.1112364250997957,
+	296.3297133599455
+    ],
+    [
+	36,
+	297.47,
+	0,
+	0
+    ]
+]
 </pre>
 </div>
 </div>
@@ -470,7 +732,7 @@ nil
 <div id="postamble" class="status">
 <p class="date">Date: 2014-09-26</p>
 <p class="author">Author: Peter Moresi</p>
-<p class="date">Created: 2014-10-22 Wed 23:19</p>
+<p class="date">Created: 2014-10-22 Wed 23:38</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
