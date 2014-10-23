@@ -1,8 +1,9 @@
 # -*- mode: org; -*-
-#+SETUPFILE: setup.org
 #+TITLE: Amortize.js
 #+AUTHOR: Peter Moresi
 #+DATE: <2014-09-26 Fri>
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/worg.css" />
 #+OPTIONS: ^:nil
 
 * About this program						       :info:

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Amortize.js</title>
-<!-- 2014-10-22 Wed 23:38 -->
+<!-- 2014-10-22 Wed 23:44 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Peter Moresi" />
@@ -380,7 +380,7 @@ The function accepts arguments:
 <pre class="src src-js" id="loop-schedule"><span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
     <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
-    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?(principle&lt;payment?principle:payment):0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
     schedule.push(row);
     remaining -= principle
 }
@@ -398,7 +398,7 @@ The function accepts arguments:
     <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
         <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
         <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
-        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?(principle&lt;payment?principle:payment):0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
         schedule.push(row);
         remaining -= principle
     }
@@ -475,7 +475,7 @@ The calculated payment is: 2245.22
     <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
         <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
         <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
-        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?(principle&lt;payment?principle:payment):0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
         schedule.push(row);
         remaining -= principle
     }
@@ -719,7 +719,7 @@ payment: 297.47
     ],
     [
 	36,
-	297.47,
+	297.4701089383061,
 	0,
 	0
     ]
@@ -732,7 +732,7 @@ payment: 297.47
 <div id="postamble" class="status">
 <p class="date">Date: 2014-09-26</p>
 <p class="author">Author: Peter Moresi</p>
-<p class="date">Created: 2014-10-22 Wed 23:38</p>
+<p class="date">Created: 2014-10-22 Wed 23:44</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
