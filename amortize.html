@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Amortize.js</title>
-<!-- 2014-11-04 Tue 08:29 -->
+<!-- 2015-03-10 Tue 22:57 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Peter Moresi" />
@@ -88,16 +88,9 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/rtd.css"/>
 <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/rtd.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -286,13 +279,13 @@ The function accepts arguments:
 <li>Finally, the sections are combined into a function.
 <div class="org-src-container">
 
-<pre class="src src-js" id="pmt">function pmt(rate,nper,pv) {
-    var pvif, pmt;
+<pre class="src src-js" id="pmt"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">pvif</span>, <span style="color: #BA36A5;">pmt</span>;
 
     pvif = Math.pow( 1 + rate, nper);
     pmt = rate / (pvif - 1) * -(pv * pvif);   
 
-    return pmt;
+    <span style="color: #0000FF;">return</span> pmt;
 };
 </pre>
 </div>
@@ -365,31 +358,31 @@ The function accepts arguments:
 <li>Define an array to capture the schedule.
 <div class="org-src-container">
 
-<pre class="src src-js" id="define-schedule-array">var schedule = [];
+<pre class="src src-js" id="define-schedule-array"><span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
 </pre>
 </div>
 </li>
 <li>Define a variable to track the remaining balance.
 <div class="org-src-container">
 
-<pre class="src src-js" id="define-remaining-balance">var remaining = loan_amount;
+<pre class="src src-js" id="define-remaining-balance"><span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
 </pre>
 </div>
 </li>
 <li>Compute the total number of payments.
 <div class="org-src-container">
 
-<pre class="src src-js" id="compute-number-of-payments">var number_of_payments = payments_per_year * years;
+<pre class="src src-js" id="compute-number-of-payments"><span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
 </pre>
 </div>
 </li>
 <li>Loop through all of the periods and capture the entries in the schedule.
 <div class="org-src-container">
 
-<pre class="src src-js" id="loop-schedule">for (var i=0; i&lt;=number_of_payments; i++) {
-    var interest = remaining * (interest_rate/100/payments_per_year);
-    var principle = (payment-interest);
-    var row = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
+<pre class="src src-js" id="loop-schedule"><span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
     schedule.push(row);
     remaining -= principle
 }
@@ -399,20 +392,20 @@ The function accepts arguments:
 <li>Finally, the sections are combined into a function.
 <div class="org-src-container">
 
-<pre class="src src-js" id="compute-schedule">function computeSchedule(loan_amount, interest_rate, payments_per_year, years, payment) {
-    var schedule = [];
-    var remaining = loan_amount;
-    var number_of_payments = payments_per_year * years;
+<pre class="src src-js" id="compute-schedule"><span style="color: #0000FF;">function</span> <span style="color: #006699;">computeSchedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
 
-    for (var i=0; i&lt;=number_of_payments; i++) {
-        var interest = remaining * (interest_rate/100/payments_per_year);
-        var principle = (payment-interest);
-        var row = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
+    <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
         schedule.push(row);
         remaining -= principle
     }
 
-    return schedule;
+    <span style="color: #0000FF;">return</span> schedule;
 }
 </pre>
 </div>
@@ -429,20 +422,20 @@ The function accepts arguments:
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 
-<pre class="src src-js" id="run-pmt">function pmt(rate,nper,pv) {
-    var pvif, pmt;
+<pre class="src src-js" id="run-pmt"><span style="color: #0000FF;">function</span> <span style="color: #006699;">pmt</span>(<span style="color: #BA36A5;">rate</span>,<span style="color: #BA36A5;">nper</span>,<span style="color: #BA36A5;">pv</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">pvif</span>, <span style="color: #BA36A5;">pmt</span>;
 
     pvif = Math.pow( 1 + rate, nper);
     pmt = rate / (pvif - 1) * -(pv * pvif);   
 
-    return pmt;
+    <span style="color: #0000FF;">return</span> pmt;
 };
 
-console.log('loan_amount: ' + loan_amount);
-console.log('interest_rate: ' + interest_rate);
-console.log('payments_per_year: ' + payments_per_year);
-console.log('years: ' + years);
-console.log( "The calculated payment is: " + 
+console.log(<span style="color: #008000;">'loan_amount: '</span> + loan_amount);
+console.log(<span style="color: #008000;">'interest_rate: '</span> + interest_rate);
+console.log(<span style="color: #008000;">'payments_per_year: '</span> + payments_per_year);
+console.log(<span style="color: #008000;">'years: '</span> + years);
+console.log( <span style="color: #008000;">"The calculated payment is: "</span> + 
              pmt(interest_rate/100/payments_per_year, payments_per_year * years, -loan_amount)
              .toFixed(2) );
 </pre>
@@ -476,27 +469,27 @@ The calculated payment is: 2245.22
 <div class="outline-text-3" id="text-3-3">
 <div class="org-src-container">
 
-<pre class="src src-js" id="run-compute-schedule">function computeSchedule(loan_amount, interest_rate, payments_per_year, years, payment) {
-    var schedule = [];
-    var remaining = loan_amount;
-    var number_of_payments = payments_per_year * years;
+<pre class="src src-js" id="run-compute-schedule"><span style="color: #0000FF;">function</span> <span style="color: #006699;">computeSchedule</span>(<span style="color: #BA36A5;">loan_amount</span>, <span style="color: #BA36A5;">interest_rate</span>, <span style="color: #BA36A5;">payments_per_year</span>, <span style="color: #BA36A5;">years</span>, <span style="color: #BA36A5;">payment</span>) {
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">schedule</span> = [];
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">remaining</span> = loan_amount;
+    <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">number_of_payments</span> = payments_per_year * years;
 
-    for (var i=0; i&lt;=number_of_payments; i++) {
-        var interest = remaining * (interest_rate/100/payments_per_year);
-        var principle = (payment-interest);
-        var row = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
+    <span style="color: #0000FF;">for</span> (<span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">i</span>=0; i&lt;=number_of_payments; i++) {
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">interest</span> = remaining * (interest_rate/100/payments_per_year);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">principle</span> = (payment-interest);
+        <span style="color: #0000FF;">var</span> <span style="color: #BA36A5;">row</span> = [i, principle&gt;0?principle:0, interest&gt;0?interest:0, remaining&gt;0?remaining:0];
         schedule.push(row);
         remaining -= principle
     }
 
-    return schedule;
+    <span style="color: #0000FF;">return</span> schedule;
 }
 
-console.log('loan_amount: ' + loan_amount);
-console.log('interest_rate: ' + interest_rate);
-console.log('payments_per_year: ' + payments_per_year);
-console.log('years: ' + years);
-console.log('payment: ' + payment);
+console.log(<span style="color: #008000;">'loan_amount: '</span> + loan_amount);
+console.log(<span style="color: #008000;">'interest_rate: '</span> + interest_rate);
+console.log(<span style="color: #008000;">'payments_per_year: '</span> + payments_per_year);
+console.log(<span style="color: #008000;">'years: '</span> + years);
+console.log(<span style="color: #008000;">'payment: '</span> + payment);
 console.log( JSON.stringify(
     computeSchedule(loan_amount, interest_rate, payments_per_year, years, payment), 0, 4
 ))
@@ -511,226 +504,226 @@ years: 3
 payment: 297.47
 [
     [
-        0,
-        259.97,
-        37.5,
-        10000
+	0,
+	259.97,
+	37.5,
+	10000
     ],
     [
-        1,
-        260.94488750000005,
-        36.5251125,
-        9740.03
+	1,
+	260.94488750000005,
+	36.5251125,
+	9740.03
     ],
     [
-        2,
-        261.92343082812505,
-        35.546569171875,
-        9479.0851125
+	2,
+	261.92343082812505,
+	35.546569171875,
+	9479.0851125
     ],
     [
-        3,
-        262.9056436937305,
-        34.56435630626953,
-        9217.161681671876
+	3,
+	262.9056436937305,
+	34.56435630626953,
+	9217.161681671876
     ],
     [
-        4,
-        263.89153985758196,
-        33.578460142418045,
-        8954.256037978146
+	4,
+	263.89153985758196,
+	33.578460142418045,
+	8954.256037978146
     ],
     [
-        5,
-        264.8811331320479,
-        32.58886686795211,
-        8690.364498120563
+	5,
+	264.8811331320479,
+	32.58886686795211,
+	8690.364498120563
     ],
     [
-        6,
-        265.8744373812931,
-        31.59556261870693,
-        8425.483364988515
+	6,
+	265.8744373812931,
+	31.59556261870693,
+	8425.483364988515
     ],
     [
-        7,
-        266.87146652147294,
-        30.59853347852708,
-        8159.608927607222
+	7,
+	266.87146652147294,
+	30.59853347852708,
+	8159.608927607222
     ],
     [
-        8,
-        267.8722345209285,
-        29.597765479071555,
-        7892.737461085749
+	8,
+	267.8722345209285,
+	29.597765479071555,
+	7892.737461085749
     ],
     [
-        9,
-        268.87675540038197,
-        28.593244599618075,
-        7624.86522656482
+	9,
+	268.87675540038197,
+	28.593244599618075,
+	7624.86522656482
     ],
     [
-        10,
-        269.8850432331334,
-        27.584956766866643,
-        7355.988471164438
+	10,
+	269.8850432331334,
+	27.584956766866643,
+	7355.988471164438
     ],
     [
-        11,
-        270.89711214525767,
-        26.57288785474239,
-        7086.103427931304
+	11,
+	270.89711214525767,
+	26.57288785474239,
+	7086.103427931304
     ],
     [
-        12,
-        271.9129763158023,
-        25.557023684197674,
-        6815.206315786047
+	12,
+	271.9129763158023,
+	25.557023684197674,
+	6815.206315786047
     ],
     [
-        13,
-        272.9326499769866,
-        24.537350023013413,
-        6543.293339470244
+	13,
+	272.9326499769866,
+	24.537350023013413,
+	6543.293339470244
     ],
     [
-        14,
-        273.95614741440033,
-        23.513852585599714,
-        6270.360689493257
+	14,
+	273.95614741440033,
+	23.513852585599714,
+	6270.360689493257
     ],
     [
-        15,
-        274.98348296720434,
-        22.486517032795714,
-        5996.404542078857
+	15,
+	274.98348296720434,
+	22.486517032795714,
+	5996.404542078857
     ],
     [
-        16,
-        276.01467102833135,
-        21.455328971668695,
-        5721.4210591116525
+	16,
+	276.01467102833135,
+	21.455328971668695,
+	5721.4210591116525
     ],
     [
-        17,
-        277.0497260446876,
-        20.420273955312453,
-        5445.406388083321
+	17,
+	277.0497260446876,
+	20.420273955312453,
+	5445.406388083321
     ],
     [
-        18,
-        278.08866251735515,
-        19.381337482644877,
-        5168.356662038634
+	18,
+	278.08866251735515,
+	19.381337482644877,
+	5168.356662038634
     ],
     [
-        19,
-        279.13149500179526,
-        18.338504998204794,
-        4890.267999521278
+	19,
+	279.13149500179526,
+	18.338504998204794,
+	4890.267999521278
     ],
     [
-        20,
-        280.17823810805197,
-        17.291761891948063,
-        4611.136504519483
+	20,
+	280.17823810805197,
+	17.291761891948063,
+	4611.136504519483
     ],
     [
-        21,
-        281.2289065009572,
-        16.24109349904287,
-        4330.958266411431
+	21,
+	281.2289065009572,
+	16.24109349904287,
+	4330.958266411431
     ],
     [
-        22,
-        282.2835149003358,
-        15.186485099664278,
-        4049.729359910474
+	22,
+	282.2835149003358,
+	15.186485099664278,
+	4049.729359910474
     ],
     [
-        23,
-        283.342078081212,
-        14.127921918788019,
-        3767.4458450101383
+	23,
+	283.342078081212,
+	14.127921918788019,
+	3767.4458450101383
     ],
     [
-        24,
-        284.40461087401656,
-        13.065389125983472,
-        3484.1037669289262
+	24,
+	284.40461087401656,
+	13.065389125983472,
+	3484.1037669289262
     ],
     [
-        25,
-        285.4711281647941,
-        11.998871835205911,
-        3199.6991560549095
+	25,
+	285.4711281647941,
+	11.998871835205911,
+	3199.6991560549095
     ],
     [
-        26,
-        286.5416448954121,
-        10.928355104587933,
-        2914.2280278901153
+	26,
+	286.5416448954121,
+	10.928355104587933,
+	2914.2280278901153
     ],
     [
-        27,
-        287.6161760637699,
-        9.853823936230137,
-        2627.6863829947033
+	27,
+	287.6161760637699,
+	9.853823936230137,
+	2627.6863829947033
     ],
     [
-        28,
-        288.69473672400903,
-        8.775263275991001,
-        2340.0702069309336
+	28,
+	288.69473672400903,
+	8.775263275991001,
+	2340.0702069309336
     ],
     [
-        29,
-        289.7773419867241,
-        7.692658013275967,
-        2051.3754702069245
+	29,
+	289.7773419867241,
+	7.692658013275967,
+	2051.3754702069245
     ],
     [
-        30,
-        290.86400701917427,
-        6.605992980825752,
-        1761.5981282202006
+	30,
+	290.86400701917427,
+	6.605992980825752,
+	1761.5981282202006
     ],
     [
-        31,
-        291.95474704549616,
-        5.515252954503849,
-        1470.7341212010263
+	31,
+	291.95474704549616,
+	5.515252954503849,
+	1470.7341212010263
     ],
     [
-        32,
-        293.0495773469168,
-        4.420422653083238,
-        1178.7793741555301
+	32,
+	293.0495773469168,
+	4.420422653083238,
+	1178.7793741555301
     ],
     [
-        33,
-        294.1485132619677,
-        3.3214867380323003,
-        885.7297968086134
+	33,
+	294.1485132619677,
+	3.3214867380323003,
+	885.7297968086134
     ],
     [
-        34,
-        295.2515701867001,
-        2.218429813299921,
-        591.5812835466456
+	34,
+	295.2515701867001,
+	2.218429813299921,
+	591.5812835466456
     ],
     [
-        35,
-        296.35876357490025,
-        1.1112364250997957,
-        296.3297133599455
+	35,
+	296.35876357490025,
+	1.1112364250997957,
+	296.3297133599455
     ],
     [
-        36,
-        297.4701089383061,
-        0,
-        0
+	36,
+	297.4701089383061,
+	0,
+	0
     ]
 ]
 </pre>
@@ -741,7 +734,7 @@ payment: 297.47
 <div id="postamble" class="status">
 <p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2014-09-26 Fri&gt;</span></span></p>
 <p class="author">Author: Peter Moresi</p>
-<p class="date">Created: 2014-11-04 Tue 08:29</p>
+<p class="date">Created: 2015-03-10 Tue 22:57</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
