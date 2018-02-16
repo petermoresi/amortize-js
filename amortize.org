@@ -19,11 +19,11 @@
 
 #+OPTIONS: ^:nil
 
-* About this program						       :info:
+* About						       :info:
 
   This is a [[http://orgmode.org/worg/org-contrib/babel/][literate program]] authored in [[http://www.org-mode.org][org-mode]].
 
-  The program generate a JavaScript file called [[./amortize.js][amortize.js]].
+  The program creates a JavaScript named [[./amortize.js][amortize.js]].
 
 * Source Code							       :code:
 
